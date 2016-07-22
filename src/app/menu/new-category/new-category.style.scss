@@ -1,0 +1,41 @@
+.new-category-section {
+	margin-top: 20px;
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	width: 200%;
+	transform: translateX(0%);
+	transition: all 0.3s ease-in-out;
+
+	&.show-form {
+		transform: translateX(-50%);
+		pointer-events: auto;
+	}
+
+	.btn-new-category {
+		width: calc(100% - 26px - 20px);
+		margin-right: 10px;
+		height: 50px;
+		padding: 12px;
+		position: relative;
+
+		i {
+			transform: translate(-50%, -50%);
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			font-size: 2.6rem;
+			color: $accent-color;
+			padding: 10px;
+		}
+	}
+
+	.new-category-title {
+		margin-bottom: 10px;
+	}
+	
+	.new-category-form {
+		width: calc(100% - 20px);
+		margin-left: 10px;
+	}
+}

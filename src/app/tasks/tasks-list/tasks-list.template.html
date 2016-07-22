@@ -1,0 +1,18 @@
+<p class="main-section-title" ng-if="!tasksListCtrl.hasTasks()">No Tasks</p>
+<div class="container-fluid tasks-container" ng-click="tasksListCtrl.updateTaskName()">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="category-title">{{tasksListCtrl.categoryItem.name | maxLen:60}}</h1>
+			<a href="#" class="btn btn-success btn-new-task" ng-click="$event.preventDefault(); tasksListCtrl.addTask()">Add Task</a>		
+		</div>
+		<div class="col-xs-6 col-sm-6 col-sm-offset-0 col-md-3" ng-repeat="(key, item) in tasksListCtrl.categoryItem.items | toArray | orderBy:'$key'">
+			<p class="task-date">{{item.$key | toCustomDate }}</p>
+			<div ng-repeat="task in item">
+				<input type="text" class="task-edit" value="{{task.title}}" ng-model="task.title" ng-if="tasksListCtrl.isEditInputVisible(item.$key, $index)" ng-click="$event.stopPropagation()">
+				<p ng-if="!tasksListCtrl.isEditInputVisible(item.$key, $index)" class="task-title" ng-class="tasksListCtrl.isDone(task.done)" ng-click="tasksListCtrl.editTask(item.$key, $index, task.title); $event.stopPropagation();">{{task.title | maxLen:60}} <a href="#" ng-if="!task.done" ng-click="$event.preventDefault(); $event.stopPropagation(); tasksListCtrl.finishTask(item.$key, $index)"><i class="glyphicon glyphicon-ok task-icon task-icon-finish"></i></a>
+				<a href="#" ng-if="task.done" ng-click="$event.preventDefault(); $event.stopPropagation(); tasksListCtrl.removeTask(item.$key, $index)"><i class="glyphicon glyphicon-remove task-icon task-icon-remove"></i></a></p>		
+			</div>
+
+		</div>
+	</div>
+</div>

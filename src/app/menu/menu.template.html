@@ -1,0 +1,14 @@
+<aside class="page-menu" ng-class="menuCtrl.showMenu">
+	<nav>
+		<a ui-sref="home" ng-click="menuCtrl.closeMenu()" class="menu-title">Todo Application</a>
+		<ul class="menu-list">
+			<li class="menu-item" ng-repeat="category in menuCtrl.categories">
+				<a href="#" class="menu-item-link" ng-class="menuCtrl.activeItem(category.id)" ng-click="$event.preventDefault(); menuCtrl.goToCategory(category.id)">{{category.name | maxLen:20}} <span class="badge menu-item-quantity">{{category.quantity}}</span> <i class="glyphicon glyphicon-remove delete-category" ng-click="menuCtrl.deleteCategory(category.id)" title="Delete category"></i></a>
+			</li>
+		</ul>
+	</nav>
+	<section class="new-category-section" ng-class="menuCtrl.showForm">
+		<a href="" class="btn-new-category" ng-click="menuCtrl.showForm='show-form'"><i class="glyphicon glyphicon-plus"></i></a>
+		<new-category-form class="new-category-form"></new-category-form>
+	</section>
+</aside>
