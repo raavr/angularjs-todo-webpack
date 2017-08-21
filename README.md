@@ -1,8 +1,10 @@
-# Angular Todo application with webpack
+# AngularJs Todo App built with webpack
 
-A sample Todo application using:
+Working example can be found here: https://raavr.github.com/angularjs-todo-webpack
+
+This app is built with:
 * [AngularJS] (http://www.angularjs.org/)
-* [Bootstrap] (http://getbootstrap.com/)
+* [Bootstrap v3] (http://getbootstrap.com/)
 * [Sass] (http://sass-lang.com/)
 * [Babel] (https://babeljs.io/)
 * [Webpack] (https://webpack.github.io/)
