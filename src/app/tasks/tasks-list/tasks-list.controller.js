@@ -17,7 +17,7 @@ export default class TasksListCtrl {
 	}
 
 	isEditInputVisible(key, index) {
-		return (this.editedTask.key === key && this.editedTask.index === index);
+		return this.editedTask.key === key && this.editedTask.index === index;
 	}
 
 	editTask(key, index, taskTitle) {
@@ -34,7 +34,7 @@ export default class TasksListCtrl {
 			key = this.editedTask.key, 
 			index = this.editedTask.index;
 
-		if(typeof key === 'undefined' || typeof index === 'undefined') {
+		if(!key || !index) {
 			return;
 		}
 
@@ -98,7 +98,7 @@ export default class TasksListCtrl {
 	}
 
 	hasTasks() {
-		if(typeof this.categoryItem === 'undefined') {
+		if(!this.categoryItem) {
 			return false;
 		}
 

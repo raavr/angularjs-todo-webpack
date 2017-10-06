@@ -19,7 +19,7 @@ export default class NewTaskCtrl {
 	}
 
 	addTask() {
-        this.$uibModalInstance.close(this.task);
+		this.$uibModalInstance.close(this.task);
     }
 
     cancel() {
