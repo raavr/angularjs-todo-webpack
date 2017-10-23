@@ -9,7 +9,7 @@ describe('Todo Service', () => {
 		fakeLocalStorage = { 'TODOS_KEY' : {
 				'todos' : [{ 
 					'id': 'bbe6e867-dbb7-4566-bbd8-61371e1786ea', 
-					'category': 'My Fav Movies', 
+					'name': 'My Fav Movies', 
 					'items': { 
 						'1465941600000': [
 							{ 'title': 'Avengers', 'done': false }
@@ -38,7 +38,7 @@ describe('Todo Service', () => {
     it('should add new category', () => {
 		let newCat = { 
 			id: 'aae6e867-dbb7-4566-bbd8-61371e1786ea', 
-			category: 'Fav things', 
+			name: 'Fav things', 
 			items : {}
 		};
 		mTodoService.addCategory('Fav things');
@@ -50,7 +50,7 @@ describe('Todo Service', () => {
     it('should return category with quantity', () => {
 		fakeLocalStorage[TODOS_KEY].todos.push({ 
 			id: 'aae6e867-dbb7-4566-bbd8-61371e1786ea', 
-			category: 'Fav things', 
+			name: 'Fav things', 
 			items : {}
 		});
 
