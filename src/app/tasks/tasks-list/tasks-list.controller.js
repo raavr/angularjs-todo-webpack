@@ -30,16 +30,14 @@ export default class TasksListCtrl {
 	}
 
 	updateTaskName() {
-		let currentTask, 
-			key = this.editedTask.key, 
-			index = this.editedTask.index;
-
-		if(!key || !index) {
+		const key = this.editedTask.key;
+		const index = this.editedTask.index;
+		
+		if(!key) {
 			return;
 		}
-
-		currentTask = this.categoryItem.items[key][index];
-
+		
+		const currentTask = this.categoryItem.items[key][index];
 		if(currentTask.title === this.editedTask.prevValue) {
 			this.editedTask = {};
 			return;
@@ -56,7 +54,7 @@ export default class TasksListCtrl {
 	}
 
 	finishTask(key, index){	
-		let currentTask = this.categoryItem.items[key][index];
+		const currentTask = this.categoryItem.items[key][index];
 		currentTask.done = true;
 		this.todoService.updateTask({
 			catId: this.$stateParams.id, 
@@ -68,7 +66,7 @@ export default class TasksListCtrl {
 
 	removeTask(key, index) {
 		this.todoService.removeTask(this.$stateParams.id, key, index).then(() => {
-			var dateTask = this.categoryItem.items;
+			const dateTask = this.categoryItem.items;
 			if(dateTask[key].length > 1) {
 				dateTask[key].splice(index, 1);
 			} else {
@@ -80,7 +78,7 @@ export default class TasksListCtrl {
 	}
 
 	addTask() {
-		let modalInstance = this.$uibModal.open({
+		const modalInstance = this.$uibModal.open({
             animation: true,
             template: require('../new-task/new-task.template.html'),
             controller: 'NewTaskCtrl as newTaskCtrl'
@@ -88,9 +86,8 @@ export default class TasksListCtrl {
 
         modalInstance.result.then((task) => {
 			this.todoService.addTask(task, this.$stateParams.id)
-			.then(() => {
-				
-				this.$rootScope.$broadcast('updateCategoriesQuantity',null);
+			.then(() => {	
+				this.$rootScope.$broadcast('updateCategoriesQuantity', null);
 				this.loadCategoryTasks();
 			});
             

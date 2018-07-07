@@ -3,13 +3,6 @@ $accent-color: #61b2a7;
 $primary-color: #222222;
 $border-color: #333333;
 
-@import './menu/hamburger-btn/hamburger-btn.style';
-@import './menu/menu.style';
-@import './menu/new-category/new-category.style';
-@import './tasks/tasks-list/tasks-list.style';
-@import './home/home.style';
-@import './menu/back-shadow/back-shadow.style';
-
 html {
 	font-size: 62.5%;
 	height: 100%;
@@ -24,15 +17,19 @@ body {
 
 .todo-wrapper {
 	height: 100%;
-}
 
-
-@media(min-width: 768px) {
-	.todo-wrapper {
-		display: flex;
-		flex-direction: row;
-	
+	@media(min-width: 768px) {
+		& {
+			display: flex;
+			flex-direction: row;
+			
+		}
 	}
-
 }
 
+@import './menu/hamburger-btn/hamburger-btn.style';
+@import './menu/menu.style';
+@import './menu/new-category/new-category.style';
+@import './tasks/tasks-list/tasks-list.style';
+@import './home/home.style';
+@import './menu/back-shadow/back-shadow.style';

@@ -1,192 +1,186 @@
 'use strict';
-var angular = require('angular');
-var uuid = require('uuid');
+const angular = require('angular');
+const uuid = require('uuid');
 
 const TODOS_KEY = 'TODOS_KEY';
 
 function getDatetimeFromNow(days) {
-	let date = new Date();
-	date.setDate(new Date().getDate() + days);
-	return date;
+    const now = new Date();
+    const next = now.setDate(now.getDate() + days);
+    
+    return new Date(next);
 }
 
-function createTask(task, obj) {
-	let timestamp = task.date.getTime();
-	if(typeof obj[timestamp] === 'undefined') {
-		obj[timestamp] = [];
-	}
+function createTask(todosObj, date, title) {
+    const timestamp = date.getTime();
+    const currentItems = todosObj[timestamp] || [];
 
-	obj[timestamp].push({title : task.title, done : false});
+    todosObj[timestamp] = [
+        ...currentItems, 
+        { title: title, done: false }
+    ];
 
-	return obj;
+    return todosObj;
 }
 
-function countTasks(object) {
-	let keys = Object.keys(object);
-	let sum = 0;
-	keys.forEach((key) => {
-		sum += object[key].length;
-	});
+function countTasks(todosObj) {
+    return Object.keys(todosObj).reduce((sum, key) => sum += todosObj[key].length, 0);
+}
 
-	return sum;
+function createSampleTodos() {
+    const itemsPersonal = createTask({}, getDatetimeFromNow(0), 'Walk the dog');
+    createTask(itemsPersonal, getDatetimeFromNow(1), 'Make hotel reservation');
+
+    const itemsShopping = createTask({}, getDatetimeFromNow(0), 'Milk');
+    createTask(itemsShopping, getDatetimeFromNow(0), 'Fruit');
+    createTask(itemsShopping, getDatetimeFromNow(0), 'Bread');
+
+    const itemsMovies = createTask({}, getDatetimeFromNow(1),'Interstellar');
+    createTask(itemsMovies, getDatetimeFromNow(1), 'The Revenant');
+    createTask(itemsMovies, getDatetimeFromNow(17), 'Avengers');
+
+    const todosObj = {
+        todos: [
+            { 
+                id: uuid.v4(),
+                name: 'Personal',
+                items: itemsPersonal
+            },
+            {
+                id: uuid.v4(),
+                name: 'Shopping List',
+                items: itemsShopping
+            },
+            {
+                id: uuid.v4(),
+                name: 'Movies to watch',
+                items: itemsMovies
+            }
+        ]
+    }
+
+    return todosObj;
 }
 
 export default class TodoService {
-	
-	constructor($q, $window) {
-		this.$q = $q;
-		this.localStorage = $window.localStorage;
-	}
+    
+    constructor($q, $window) {
+        this.$q = $q;
+        this.localStorage = $window.localStorage;
+    }
 
+    _getSampleTodos() {
+        const todos = createSampleTodos();
+        this._save(todos);
 
-	_createSampleTask() {
-		let itemsPersonal = createTask({'date' : getDatetimeFromNow(0), 'title':'Walk the dog'}, {});
-		createTask({'date' : getDatetimeFromNow(1), 'title':'Make hotel reservation'}, itemsPersonal);
+        return todos;
+    }
 
-		let itemsShopping = createTask({'date' : getDatetimeFromNow(0), 'title':'Milk'}, {});
-		createTask({'date' : getDatetimeFromNow(0), 'title':'Fruit'}, itemsShopping);
-		createTask({'date' : getDatetimeFromNow(0), 'title':'Bread'}, itemsShopping);
+    _getAll() {
+        const deferred = this.$q.defer();
+        let todos = angular.fromJson(this.localStorage.getItem(TODOS_KEY));
+        if(!todos) {
+            todos = this._getSampleTodos();
+        } 
+        deferred.resolve(todos);
 
-		let itemsMovies = createTask({'date' : getDatetimeFromNow(1), 'title':'Interstellar'}, {});
-		createTask({'date' : getDatetimeFromNow(1), 'title':'The Revenant'}, itemsMovies);
-		createTask({'date' : getDatetimeFromNow(17), 'title':'Avengers'}, itemsMovies);
+        return deferred.promise;
+    }
 
-		let list = {'todos':[
-					{'id':uuid.v4(),'name':'Personal','items':itemsPersonal},
-					{'id':uuid.v4(),'name':'Shopping List','items':itemsShopping},
-					{'id': uuid.v4(),'name':'Movies to watch','items':itemsMovies}
-					]};
-		this._save(list);
+    _save(data) {
+        this.localStorage.setItem(TODOS_KEY, angular.toJson(data));
+    }
 
-		return list;
-	}
+    addCategory(categoryName) {
+        return this._getAll().then((data) => {
+            const catObj = {
+                id: uuid.v4(), 
+                name: categoryName, 
+                items: {}
+            };
+            data.todos.push(catObj);
+            this._save(data);
+            
+            return catObj;
+        });
+    }
 
-	_getAll() {
-		let deferred = this.$q.defer();
-		let list = angular.fromJson(this.localStorage.getItem(TODOS_KEY));
-		if(!list) {
-			list = this._createSampleTask();
-		} 
-		deferred.resolve(list);
+    getAllCategoriesWithQuantity() {
+        return this._getAll().then((data) => {
+            return data.todos.reduce((categories, elem) => {
+                const obj = {
+                    id: elem.id, 
+                    name: elem.name, 
+                    quantity: countTasks(elem.items)
+                };
+                return [...categories, obj];
+            }, []);
+        });
+    }
 
-		return deferred.promise;
-	}
+    getCategoryById(id) {
+        return this._getAll().then((data) => {
+            return data.todos.filter(d => d.id === id)[0];
+        });
+    }
 
-	 _save(data) {
-		this.localStorage.setItem(TODOS_KEY, angular.toJson(data));
-	}
+    addTask(task, catId) {
+        return this._getAll().then((data) => {
+            const category = data.todos.filter(d => d.id === catId)[0];
+            if(!category) {
+                return data;
+            }
+            
+            category.items = createTask(category.items, task.date, task.title);
+            this._save(data);
+            return data;
+        });
+    }
 
-	addCategory(categoryName) {
-		return this._getAll().then((data) => {
-			let catObj = {
-				id : uuid.v4(), 
-				name : categoryName, 
-				items: {}
-			};
-			data.todos.push(catObj);
-			this._save(data);
-			return catObj;
-		});
-	}
+    deleteCategory(id) {
+        return this._getAll().then((data) => {
+            const index = data.todos.findIndex((d) => d.id === id);
 
-	getAllCategoryWithQuantity() {
-		return this._getAll().then((data) => {
-			let categories = [];
-			data.todos.forEach((elem) => {
-				let obj = {
-					id: elem.id, 
-					name: elem.name, 
-					quantity: countTasks(elem.items)
-				};
-				categories.push(obj);
-			});
+            if(index > -1) {
+                data.todos.splice(index, 1);
+            }
+            this._save(data);
 
-			return categories;
-		});
-	}
+            return index;
+        });
+    }
 
-	getCategoryById(id) {
-		return this._getAll().then((data) => {
-			let item = data.todos.filter((d) => {
-				if(d.id === id)
-					return d;
+    updateTask(obj) {
+        return this._getAll().then((data) => {
+            const item = data.todos.filter((d) => d.id === obj.catId)[0];
+            if(!item || !item.items) {
+                return null;
+            }
 
-				return null;
-			});
+            item.items[obj.dateKey][obj.taskId] = obj.task;
+            this._save(data);
 
+            return item;
+        });
+    }
 
-			return item[0];
-		});
-	}
+    removeTask(catId, dateKey, taskId) {
+        return this._getAll().then((data) => {
+            const item = data.todos.filter((d) => d.id === catId)[0];
+            if(!item || !item.items) {
+                return null;
+            }
+            const dateTask = item.items;
+            if(dateTask[dateKey].length > 1) {
+                dateTask[dateKey].splice(taskId, 1);
+            } else {
+                delete dateTask[dateKey];
+            }
+            this._save(data);
 
-	addTask(task, catId) {
-		return this._getAll().then((data) => {
-			data.todos.forEach((d) => {
-				if(d.id === catId) {
-					d.items = createTask(task, d.items);
-				}
-			});
-
-			this._save(data);
-			return data;
-		});
-	}
-
-	deleteCategory(id) {
-		return this._getAll().then((data) => {
-			let index = data.todos.findIndex((d) => {
-				return d.id === id;
-			});
-
-			if(index > -1) {
-				data.todos.splice(index, 1);
-			}
-			this._save(data);
-
-			return index;
-		});
-	}
-
-	updateTask(obj) {
-		return this._getAll().then((data) => {
-			let item = data.todos.filter((d) => {
-				if(d.id === obj.catId) {
-					return d;
-				}
-
-				return null;
-			});
-
-			item[0].items[obj.dateKey][obj.taskId] = obj.task;
-			this._save(data);
-
-			return item[0];
-		});
-	}
-
-	removeTask(catId, dateKey, taskId) {
-		return this._getAll().then((data) => {
-			let item = data.todos.filter((d) => {
-				if(d.id === catId) {
-					return d;
-				}
-
-				return null;
-			});
-
-			let dateTask = item[0].items;
-			if(dateTask[dateKey].length > 1) {
-				dateTask[dateKey].splice(taskId, 1);
-			} else {
-				delete dateTask[dateKey];
-			}
-			this._save(data);
-
-			return item[0];
-		});
-
-		
-	}
+            return item;
+        });
+    }
 
 }
 

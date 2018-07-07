@@ -17,7 +17,7 @@ export default class MenuCtrl {
 	}
 
 	getCategories() {
-		this.todoService.getAllCategoryWithQuantity()
+		this.todoService.getAllCategoriesWithQuantity()
 			.then(data => this.categories = data);
 	}
 
@@ -51,16 +51,12 @@ export default class MenuCtrl {
 	}
 
 	goToCategory(catId) {
-		this.$state.go('category', {id : catId});
+		this.$state.go('category', { id: catId });
 		this.closeMenu();
 	}
 
 	activeItem(catId) {
-		if(catId === this.$stateParams.id) {
-			return 'active';
-		}
-
-		return '';
+		return catId === this.$stateParams.id ? 'active' : '';
 	}
 
 	openMenu() {

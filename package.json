@@ -31,6 +31,7 @@
     "angular-ui-router": "^0.3.1",
     "bootstrap": "^3.3.6",
     "http-server": "^0.9.0",
+    "node-sass": "^4.7.2",
     "uuid": "^2.0.2"
   },
   "devDependencies": {
@@ -55,7 +56,6 @@
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.7.0",
     "node-libs-browser": "^1.0.0",
-    "node-sass": "^3.8.0",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.4",
     "postcss-loader": "^0.9.1",
@@ -67,7 +67,7 @@
     "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.14.0"
   },
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "https://github.com/raavr/angularjs-todo-webpack.git"
   }

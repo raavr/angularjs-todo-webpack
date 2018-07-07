@@ -68,7 +68,7 @@ describe('Todo Service', () => {
 		];
 
 		let returnedObject;
-		mTodoService.getAllCategoryWithQuantity()
+		mTodoService.getAllCategoriesWithQuantity()
 			.then((data) => returnedObject = data);
 		rootScope.$digest();
 
