@@ -1,71 +1,75 @@
-'use strict';
 export default class MenuCtrl {
 
-	constructor(todoService, $timeout, $window, $state, $stateParams, $scope) {
-		this.todoService = todoService;
-		this.$timeout = $timeout;
-		this.$window = $window;
-		this.$state = $state;
-		this.$stateParams = $stateParams;
-		this.$scope = $scope;
+  constructor(todoService, $timeout, $window, $state, $stateParams, $scope) {
+    this.todoService = todoService;
+    this.$timeout = $timeout;
+    this.$window = $window;
+    this.$state = $state;
+    this.$stateParams = $stateParams;
+    this.$scope = $scope;
 
-		this.getCategories();
-		this.$scope.$on('updateCategoriesQuantity', () => {
-		    this.getCategories();
-		});
+    this.getCategories();
+    this.$scope.$on('updateCategoriesQuantity', () => {
+      this.getCategories();
+    });
 
-	}
+  }
 
-	getCategories() {
-		this.todoService.getAllCategoriesWithQuantity()
-			.then(data => this.categories = data);
-	}
+  getCategories() {
+    this.todoService.getAllCategoriesWithQuantity()
+      .then(data => this.categories = data);
+  }
 
-	deleteCategory(id) {
-		if(this.$window.confirm('Are you sure?')) {
-			this.todoService.deleteCategory(id)
-				.then(index => { 
-					this.categories.splice(index, 1); 
-					if(id === this.$stateParams.id) {
-						this.$state.go('home');
-					}
-				}
-			);
-		}
-	}
+  deleteCategory(id) {
+    if (this.$window.confirm('Are you sure?')) {
+      this.todoService.deleteCategory(id)
+        .then(index => {
+          this.categories.splice(index, 1);
+          if (id === this.$stateParams.id) {
+            this.$state.go('home');
+          }
+        });
+    }
+  }
 
-	cancelNewCategory() {
-		this.newCategoryTitle = '';
-	}
+  clearNewCategoryTitle() {
+    this.newCategoryTitle = '';
+  }
 
-	addNewCategory() {
-		this.todoService.addCategory(this.newCategoryTitle)
-			.then(() => {
-				this.getCategories();
-				this.$timeout(() => {
-					this.showForm = '';
-				}, 200);
+  cancelCategoryAdding() {
+    this.clearNewCategoryTitle();
+    this.setCategoryFormClass('');
+  }
 
-				this.cancelNewCategory();
-			});
-	}
+  addNewCategory() {
+    this.todoService.addCategory(this.newCategoryTitle)
+      .then(() => {
+        this.getCategories();
+        this.$timeout(() => {
+          this.setCategoryFormClass('');
+        }, 200);
 
-	goToCategory(catId) {
-		this.$state.go('category', { id: catId });
-		this.closeMenu();
-	}
+        this.clearNewCategoryTitle();
+      });
+  }
 
-	activeItem(catId) {
-		return catId === this.$stateParams.id ? 'active' : '';
-	}
+  goToCategory(catId, event) {
+    event.preventDefault();
+    this.$state.go('category', { id: catId });
+    this.setMenuClass('');
+  }
 
-	openMenu() {
-		this.showMenu = 'show-menu';
-	}
+  activeItem(catId) {
+    return catId === this.$stateParams.id ? 'active' : '';
+  }
 
-	closeMenu() {
-		this.showMenu = ''; 
-	}
+  setCategoryFormClass(showFormClass) {
+    this.showFormClass = showFormClass;
+  }
+
+  setMenuClass(showMenuClass) {
+    this.showMenuClass = showMenuClass;
+  }
 
 }
 

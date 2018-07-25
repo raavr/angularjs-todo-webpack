@@ -1,24 +1,24 @@
-'use strict';
 export default function ToCustomDateFilter($filter) {
-	return function(value) {
-		const dValue = $filter('date')(value, 'dd.MM.yyyy'),
-			  dNow = $filter('date')(new Date().getTime(), 'dd.MM.yyyy'),
-			  tomorrow = new Date().setDate(new Date().getDate() + 1),
-			  yesterday = new Date().setDate(new Date().getDate() - 1),
-			  dYesterday = $filter('date')(yesterday, 'dd.MM.yyyy'),
-			  dTomorrow = $filter('date')(tomorrow, 'dd.MM.yyyy');
+  const formatDate = (date) => $filter('date')(date, 'dd.MM.yyyy');
 
-		switch(dValue) {
-			case dNow:
-				return 'Today';
-			case dTomorrow:
-				return 'Tomorrow';
-			case dYesterday:
-				return 'Yesterday';
-			default:
-				return dValue;
-		}
-	};
+	return (timestamp) => {
+    const now = new Date();
+    const tomorrow = new Date().setDate(now.getDate() + 1);
+		const yesterday = new Date().setDate(now.getDate() - 1);
+    
+		const viewDate = formatDate(timestamp);
+   
+		switch(viewDate) {
+      case formatDate(now):
+    		return 'Today';
+      case formatDate(tomorrow):
+    		return 'Tomorrow';
+      case formatDate(yesterday):
+    	  return 'Yesterday';
+      default:
+    		return viewDate;
+      }
+    };
 }
 
 ToCustomDateFilter.$inject = ['$filter'];

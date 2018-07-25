@@ -1,5 +1,7 @@
 .tasks-container {
 
+  min-height: 100%;
+
 	.category-title {
 		text-align: center;	
 		text-transform: uppercase;
@@ -7,7 +9,7 @@
 		font-size: 3rem;
 		margin-bottom: 30px;
 		word-wrap: break-word;
-	    padding: 0 20px;
+	  padding: 0 20px;
 	}
 
 	.task-title {
@@ -36,9 +38,8 @@
 		margin-top: 20px;
 		font-size: 2.4rem;
 		font-weight: 500;
-	    line-height: 1.1;
+	  line-height: 1.1;
 	}
-
 
 	.btn-new-task {
 		position: fixed;
@@ -65,5 +66,4 @@
 	.task-done {
 		text-decoration: line-through; 
 	}
-
 }

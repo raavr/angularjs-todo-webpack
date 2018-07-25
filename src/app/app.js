@@ -1,5 +1,3 @@
-'use strict';
-
 import 'bootstrap/dist/css/bootstrap.css';
 import './app.style.scss';
 import angular from 'angular';
@@ -20,15 +18,15 @@ import ToArrayFilter from './tasks/tasks-list/to-array.filter';
 import ToCustomDateFilter from './tasks/tasks-list/to-custom-date.filter';
 
 export default angular.module('TodoApp', [uirouter, uibootstrap])
-	.config(AppConfig)
-	.service('todoService', TodoService)
-	.controller('NewTaskCtrl', NewTaskCtrl)
-	.controller('TasksListCtrl', TasksListCtrl)
-	.controller('MenuCtrl', MenuCtrl)
-	.directive('backShadow', BackShadowDir)
-	.directive('hamburgerBtn', HamburgerBtnDir)
-	.directive('newCategoryForm', NewCategoryDir)
-	.directive('menu', MenuDir)
-	.filter('maxLen', MaxLenFilter)
-	.filter('toArray', ToArrayFilter)
-	.filter('toCustomDate',  ToCustomDateFilter);
+  .config(AppConfig)
+  .service('todoService', TodoService)
+  .controller('NewTaskCtrl', NewTaskCtrl)
+  .controller('TasksListCtrl', TasksListCtrl)
+  .controller('MenuCtrl', MenuCtrl)
+  .directive('backShadow', BackShadowDir)
+  .directive('hamburgerBtn', HamburgerBtnDir)
+  .directive('newCategoryForm', NewCategoryDir)
+  .directive('menu', MenuDir)
+  .filter('maxLen', MaxLenFilter)
+  .filter('toArray', ToArrayFilter)
+  .filter('toCustomDate', ToCustomDateFilter);
