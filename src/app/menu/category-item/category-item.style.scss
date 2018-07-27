@@ -1,0 +1,30 @@
+.category {
+  &__link {
+    color: $text-color;
+    display: block;
+    padding: 15px 10px;
+    position: relative;
+    border-top: 1px solid $border-color;
+  
+    &:hover, &:focus {
+      background-color: $border-color;
+      text-decoration: none;
+      color: $text-color;
+    }
+  
+    &.active {
+      background-color: $border-color;
+    }
+  }
+  
+  &__delete-btn {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  
+  &__quantity {
+    background-color: $accent-color;
+  }
+}

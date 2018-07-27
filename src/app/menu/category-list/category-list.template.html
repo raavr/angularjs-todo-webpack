@@ -1,0 +1,5 @@
+<ul class="category__list">
+  <li class="category__item" ng-repeat="category in $ctrl.categories">
+    <category-item category="category" delete-category="$ctrl.deleteCategory({categoryId})" hide-menu="$ctrl.hideMenu()"></category-item>
+  </li>
+</ul>

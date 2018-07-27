@@ -1,0 +1,7 @@
+<aside class="navbar" ng-class="$ctrl.menuClass">
+  <nav>
+    <a ui-sref="home" ng-click="$ctrl.hideMenu()" class="navbar__title">Todo Application</a>
+    <category-list categories="$ctrl.categories" delete-category="$ctrl.deleteCategory(categoryId)" hide-menu="$ctrl.hideMenu()"></category-list>
+  </nav>
+  <category-creator on-category-added="$ctrl.addCategory(categoryName)"></category-creator>
+</aside>

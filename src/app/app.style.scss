@@ -17,18 +17,16 @@ body {
 
 .todo-wrapper {
 	height: 100%;
-
-	@media(min-width: 768px) {
-		& {
-			display: flex;
-			flex-direction: row;
-		}
-	}
+	display: flex;
+	flex-direction: row;
 }
 
 @import './menu/hamburger-btn/hamburger-btn.style';
-@import './menu/menu.style';
-@import './menu/new-category/new-category.style';
+@import './menu/navbar/navbar.style';
+@import './menu/category-creator/category-creator.style';
+@import './menu/category-form/category-form.style';
+@import './menu/category-list/category-list.style';
+@import './menu/category-item/category-item.style';
 @import './tasks/tasks-list/tasks-list.style';
 @import './home/home.style';
 @import './menu/back-shadow/back-shadow.style';

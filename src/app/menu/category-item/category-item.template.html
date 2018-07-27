@@ -1,0 +1,4 @@
+<a href="#" class="category__link" ng-class="$ctrl.getClass()" ui-sref="category({ id: $ctrl.category.id })" ng-click="$ctrl.hideMenu()">{{$ctrl.category.name | maxLen:20}}
+  <span class="badge category__quantity">{{$ctrl.category.quantity}}</span>
+  <i class="glyphicon glyphicon-remove category__delete-btn" ng-click="$ctrl.deleteCategory({categoryId: $ctrl.category.id})" title="Delete category"></i>
+</a>

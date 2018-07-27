@@ -1,6 +1,0 @@
-<form name="newCategoryForm" ng-submit="menuCtrl.addNewCategory()" novalidate>
-  <input type="text" ng-model="menuCtrl.newCategoryTitle" placeholder="Category Name" class="form-control new-category-title"
-    required>
-  <button type="submit" class="btn btn-primary" ng-disabled="newCategoryForm.$invalid">Add</button>
-  <button type="button" class="btn btn-danger" ng-click="menuCtrl.cancelCategoryAdding()">Cancel</button>
-</form>

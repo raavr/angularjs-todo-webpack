@@ -9,10 +9,10 @@
 		color: white;
 		font-size: 2rem;
 	}
-}
 
-@media(min-width: 768px) {
-	.hamburger-btn {
-		display: none;
+	@media(min-width: 768px) {
+		& {
+			display: none;
+		}
 	}
 }

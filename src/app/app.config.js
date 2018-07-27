@@ -1,11 +1,12 @@
 export default function AppConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('home', {
+      name: 'home',
       url: '/',
-      template: require('./home/home.template.html')
+      component: 'home'
     })
     .state('category', {
-      url: '/category/:id',
+      url: '/category/{id}',
       template: require('./tasks/tasks-list/tasks-list.template.html'),
       controller: 'TasksListCtrl',
       controllerAs: 'tasksListCtrl'

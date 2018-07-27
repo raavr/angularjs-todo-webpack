@@ -1,0 +1,6 @@
+<section class="category-creator" ng-class="$ctrl.showFormClass">
+  <a href="" class="category-creator__btn" ng-click="$ctrl.setCategoryFormClass('show-form')">
+    <i class="glyphicon glyphicon-plus"></i>
+  </a>
+  <category-form add-category="$ctrl.addCategory(categoryName)" hide-form="$ctrl.setCategoryFormClass('')" class="category-form"></category-form>
+</section>
