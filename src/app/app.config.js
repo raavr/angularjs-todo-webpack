@@ -1,18 +1,6 @@
-export default function AppConfig($stateProvider, $urlRouterProvider, $locationProvider) {
-  $stateProvider
-    .state('home', {
-      name: 'home',
-      url: '/',
-      component: 'home'
-    })
-    .state('category', {
-      name: 'category',
-      url: '/category/{id}',
-      component: 'tasksContainer'
-    });
-
+export default function AppConfig($urlRouterProvider, $locationProvider) {
   $urlRouterProvider.otherwise('/');
   $locationProvider.html5Mode(true);
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'];
+AppConfig.$inject = ['$urlRouterProvider', '$locationProvider'];
