@@ -1,0 +1,28 @@
+<div class="modal-header">
+  <h2 class="modal-title">New Task</h2>
+</div>
+<div class="modal-body">
+  <form name="newTaskForm" id="newTaskForm" novalidate>
+    <div class="form-group">
+      <label for="new-task-title">Title</label>
+      <input ng-model="$ctrl.task.title" type="text" class="form-control" id="new-task-title" ng-required="true">
+    </div>
+    <div class="form-group">
+      <label for="new-task-date">Date</label>
+      <div class="input-group">
+        <input type="text" id="new-task-date" class="form-control" uib-datepicker-popup="dd.MM.yyyy" ng-model="$ctrl.task.date"
+          is-open="$ctrl.dateOptions.opened" datepicker-options="$ctrl.dateOptions" ng-required="true" ng-click="$ctrl.openCalendar()"
+          close-text="Close" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="$ctrl.openCalendar()">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" ng-click="$ctrl.addTask()" class="btn btn-success" ng-disabled="newTaskForm.$invalid">Submit</button>
+  <button type="button" ng-click="$ctrl.cancel()" class="btn btn-danger">Cancel</button>
+</div>

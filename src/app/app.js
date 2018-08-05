@@ -6,11 +6,9 @@ import uibootstrap from 'angular-ui-bootstrap';
 
 import AppConfig from './app.config';
 import TodoService from './services/todo.service';
-import NewTaskCtrl from './tasks/new-task/new-task.controller';
-import TasksListCtrl from './tasks/tasks-list/tasks-list.controller';
 import MaxLenFilter from './filters/max-len.filter';
-import ToArrayFilter from './tasks/tasks-list/to-array.filter';
-import ToCustomDateFilter from './tasks/tasks-list/to-custom-date.filter';
+import ToArrayFilter from './tasks/tasks-container/to-array.filter';
+import ToCustomDateFilter from './tasks/tasks-group/to-custom-date.filter';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './menu/navbar/navbar.component';
 import { HamburgerBtnComponent } from './menu/hamburger-btn/hamburger-btn.component';
@@ -20,12 +18,20 @@ import { CategoryFormComponent } from './menu/category-form/category-form.compon
 import { CategoryCreatorComponent } from './menu/category-creator/category-creator.component';
 import { CategoryListComponent } from './menu/category-list/category-list.component';
 import { CategoryItemComponent } from './menu/category-item/category-item.component';
+import { TasksContainerComponent } from './tasks/tasks-container/tasks-container.component';
+import { TaskFormComponent } from './tasks/task-form/task-form.component';
+import { TasksGroupComponent } from './tasks/tasks-group/tasks-group.component';
+import { TaskItemComponent } from './tasks/task-item/task-item.component';
+import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 
 export default angular.module('TodoApp', [uirouter, uibootstrap])
   .config(AppConfig)
   .service('todoService', TodoService)
-  .controller('NewTaskCtrl', NewTaskCtrl)
-  .controller('TasksListCtrl', TasksListCtrl)
+  .component('taskForm', TaskFormComponent)
+  .component('tasksContainer', TasksContainerComponent)
+  .component('tasksGroup', TasksGroupComponent)
+  .component('tasksList', TasksListComponent)
+  .component('taskItem', TaskItemComponent)
   .component('home', HomeComponent)
   .component('navbar', NavbarComponent)
   .component('appMenu', MenuComponent)

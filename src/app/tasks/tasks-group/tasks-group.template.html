@@ -1,0 +1,4 @@
+<p class="tasks-group__title">{{$ctrl.taskGroup.$key | toCustomDate }}</p>
+<tasks-list ng-repeat="task in $ctrl.taskGroup">
+  <task-item task="task" task-idx="$index" edit-task="$ctrl.editTask({task})" remove-task="$ctrl.removeTask({taskIdx})" finish-task="$ctrl.finishTask({taskIdx})"></task-item>
+</tasks-list>

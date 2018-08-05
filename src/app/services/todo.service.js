@@ -107,38 +107,38 @@ export default class TodoService {
   getAllCategoriesWithQuantity() {
     return this._getAll().then((data) => {
       return data.todos.reduce((categories, elem) => {
-        const obj = {
+        const category = {
           id: elem.id,
           name: elem.name,
           quantity: countTasks(elem.items)
         };
-        return [...categories, obj];
+        return [...categories, category];
       }, []);
     });
   }
 
-  getCategoryById(id) {
+  getCategoryById(catId) {
     return this._getAll().then((data) => {
-      return data.todos.filter(d => d.id === id)[0];
+      return data.todos.filter(d => d.id === catId)[0];
     });
   }
 
-  addTask(task, catId) {
+  addTask(categoryTask) {
     return this._getAll().then((data) => {
-      const category = data.todos.filter(d => d.id === catId)[0];
+      const category = data.todos.filter(d => d.id === categoryTask.catId)[0];
       if (!category) {
         return data;
       }
 
-      category.items = createTask(category.items, task.date, task.title);
+      category.items = createTask(category.items, categoryTask.task.date, categoryTask.task.title);
       this._save(data);
       return data;
     });
   }
 
-  deleteCategory(id) {
+  deleteCategory(catId) {
     return this._getAll().then((data) => {
-      const index = data.todos.findIndex((d) => d.id === id);
+      const index = data.todos.findIndex((d) => d.id === catId);
 
       if (index > -1) {
         data.todos.splice(index, 1);
@@ -149,35 +149,35 @@ export default class TodoService {
     });
   }
 
-  updateTask(obj) {
+  updateTask(categoryTask) {
     return this._getAll().then((data) => {
-      const item = data.todos.filter((d) => d.id === obj.catId)[0];
-      if (!item || !item.items) {
+      const category = data.todos.filter((d) => d.id === categoryTask.catId)[0];
+      if (!category || !category.items) {
         return null;
       }
 
-      item.items[obj.dateKey][obj.taskId] = obj.task;
+      category.items[categoryTask.task.key][categoryTask.task.index] = categoryTask.task.data;
       this._save(data);
 
-      return item;
+      return category;
     });
   }
 
-  removeTask(catId, dateKey, taskId) {
+  removeTask(categoryTask) {
     return this._getAll().then((data) => {
-      const item = data.todos.filter((d) => d.id === catId)[0];
-      if (!item || !item.items) {
+      const category = data.todos.filter((d) => d.id === categoryTask.catId)[0];
+      if (!category || !category.items) {
         return null;
       }
-      const dateTask = item.items;
-      if (dateTask[dateKey].length > 1) {
-        dateTask[dateKey].splice(taskId, 1);
+      const tasks = category.items;
+      if (tasks[categoryTask.task.key].length > 1) {
+        tasks[categoryTask.task.key].splice(categoryTask.task.index, 1);
       } else {
-        delete dateTask[dateKey];
+        delete tasks[categoryTask.task.key];
       }
       this._save(data);
 
-      return item;
+      return category;
     });
   }
 

@@ -1,0 +1,10 @@
+<input type="text" class="task__edit-input" value="{{$ctrl.task.title}}" ng-model="$ctrl.task.title" ng-if="$ctrl.isEdited" ng-click="$event.stopPropagation();">
+<div class="task__title" ng-if="!$ctrl.isEdited" ng-class="$ctrl.isDone()" ng-click="$event.stopPropagation(); $ctrl.startEditing()">
+  {{$ctrl.task.title | maxLen:60}}
+  <a href="#" ng-if="!$ctrl.task.done" ng-click="$event.preventDefault(); $event.stopPropagation(); $ctrl.finishTask({taskIdx: $ctrl.taskIdx})">
+    <i class="glyphicon glyphicon-ok task__icon task__icon--finish"></i>
+  </a>
+  <a href="#" ng-if="$ctrl.task.done" ng-click="$event.preventDefault(); $event.stopPropagation(); $ctrl.removeTask({taskIdx: $ctrl.taskIdx})">
+    <i class="glyphicon glyphicon-remove task__icon task__icon--remove"></i>
+  </a>
+</div>

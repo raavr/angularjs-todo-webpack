@@ -1,0 +1,10 @@
+<p class="todo-main__title" ng-if="!$ctrl.hasTasks()">No Tasks</p>
+<div class="container-fluid tasks-container" ng-click="$ctrl.updateTaskName()">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="category__name">{{$ctrl.categoryItem.name | maxLen:60}}</h1>
+      <a href="#" class="btn btn-success new-task-btn" ng-click="$event.preventDefault(); $ctrl.addTask()">Add Task</a>
+    </div>
+    <tasks-group ng-repeat="(key, item) in $ctrl.categoryItem.items | toArray | orderBy:'$key'" task-group="item" class="col-xs-6 col-sm-6 col-sm-offset-0 col-md-3" on-task-edited="$ctrl.editTask({taskGroup})" on-task-removed="$ctrl.removeTask({taskGroup})" on-task-finished="$ctrl.finishTask({taskGroup})"></tasks-group>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+.tasks-container {
+  min-height: 100%;
+}
+
+.category__name {
+	text-align: center;	
+	text-transform: uppercase;
+	font-weight: 700; 
+	font-size: 3rem;
+	margin-bottom: 30px;
+	word-wrap: break-word;
+	padding: 0 20px;
+}
+
+.new-task-btn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1;
+}
+

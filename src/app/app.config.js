@@ -6,10 +6,9 @@ export default function AppConfig($stateProvider, $urlRouterProvider, $locationP
       component: 'home'
     })
     .state('category', {
+      name: 'category',
       url: '/category/{id}',
-      template: require('./tasks/tasks-list/tasks-list.template.html'),
-      controller: 'TasksListCtrl',
-      controllerAs: 'tasksListCtrl'
+      component: 'tasksContainer'
     });
 
   $urlRouterProvider.otherwise('/');
