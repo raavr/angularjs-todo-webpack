@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html ng-app="TodoApp">
-    <head>
-        <base href="/angularjs-todo-webpack/">
-    	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    	<meta name="description" content="Todo App">
-    	<meta name="author" content="Rafał Rykowski">
-        <meta charset="utf-8">
-        <link rel="icon" type="image/x-icon" href="img/favicon.ico">
-        <title>ToDo App</title>
-    <link href="./app.89f4e8c1313e8b7892f6.css" rel="stylesheet"></head>
-    <body>
-	    <div class="todo-wrapper">
-	       <back-shadow></back-shadow>
-	       <hamburger-btn></hamburger-btn>
-	       <menu></menu>
-           <div ui-view class="todo-main"></div>
-	    </div>
-	    
-    <script type="text/javascript" src="./app.6d73fe3cbd0edd82f773.bundle.js"></script></body>
+  <head>
+    <base href="/angularjs-todo-webpack/">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="Todo App">
+    <meta name="author" content="Rafał Rykowski">
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <title>ToDo App</title>
+  <link href="./app.ea6be213c9d33515300a.css" rel="stylesheet"></head>
+  <body>
+    <div class="todo-wrapper">
+      <app-menu></app-menu>
+      <ui-view class="todo-main"></ui-view>
+    </div>
+  <script type="text/javascript" src="./app.433525b4e0c71409d0dd.bundle.js"></script></body>
 </html>
